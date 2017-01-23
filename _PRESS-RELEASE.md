@@ -26,19 +26,19 @@ Once the project moves into development, the press release can be used as a touc
 ## Problem ##
   Stromwater engineers in Australia, as part of their MUSIC modelling process, require APET data for their project location as inputs. Common practice is to read off APET value contours (and interpolate values) for each month off the maps in the BOM website. This is slow and often error-prone.
 
-  The "proper" way to obtain the data is off the APET ERSI Grid from the BOM, but the often the engineer does not have sufficient GIS knowledge to do so. This means that the task is delegated to the company's GIS operator, which introduce additional issues (availability, time, cost).
+  The "proper" way to obtain the data is off the APET ERSI Grid from the BOM, but the often the engineer does not have sufficient GIS knowledge to do so. This means that the task is delegated to the company's GIS operator, which introduce additional issues such as availability, time and cost.
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+  I-AM-A-PET solves this issue by allowing an engineer to quickly and easily interrogate APET data on a map, bypassing the issues with eye-balling BOM charts or asking the GIS operator to do the work.
 
-## Quote from You ##
-  "I used to cringe looking at a senior engineer eye-balling the BOM APET charts. But with this easy-to-use tool, they can get accurate data first time, everytime."
+## Quote ##
+  "I used to cringe looking at a senior engineer eye-balling the BOM APET charts. But with this easy-to-use tool, they can get accurate data first time, everytime." -- ME
 
 ## How to Get Started ##
   Go onto the website, click on the map where you want the APET data, and the result data is dispaly on the right. Enter this into your MUSIC model.
 
 ## Customer Quote ##
-  "I used to have to budget 2 hours for a GIS guy (because he pads his timesheet) to get my APET input data for MUSIC modelling, now I can do it in 5 mintues."
+  "I used to have to budget 2 hours for a GIS guy (because he pads his timesheet) to get my APET input data for MUSIC modelling, now I can do it in 5 mintues and I don't have to fight other project managers for the GIS guy's availability." - Abraham Lincoln
 
 ## Closing and Call to Action ##
   Goto http://www.IAMAPET.com to use the tool!
