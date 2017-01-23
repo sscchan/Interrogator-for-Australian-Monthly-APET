@@ -80,6 +80,12 @@ app.get('/APET/:longitude,:latitude', function(request, response) {
 
 });
 
+// Serve static pages for client using express middleware
+let clientFileDirectory = __dirname + '/../client';
+console.log(clientFileDirectory);
+app.use(express.static(clientFileDirectory));
+
+// Start listening
 app.listen(8000, function() {
   console.log('Listening at port 8000');
 });
