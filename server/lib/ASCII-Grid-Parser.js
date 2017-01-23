@@ -49,6 +49,11 @@ function parseASCIIGrid(filepath) {
     for (let j = 0; j < col.length; j++) {
       let cellValue = parseFloat(col[j]);
 
+      // Do not parse any NaN values
+      if (isNaN(cellValue)) {
+        continue;
+      }
+
       // Do not enter any NO_DATA value into our data storage
       if (cellValue === gridReference['NODATA_value']) {
         continue;
@@ -59,7 +64,7 @@ function parseASCIIGrid(filepath) {
       let xCoordinate = xllcorner + (colIndex * cellsize) + (0.5 * cellsize);
 
       // Save it into our storage
-      gridData[xCoordinate + ',' + yCoordinate] = cellValue;
+      gridData[xCoordinate.toFixed(1) + ',' + yCoordinate.toFixed(2)] = cellValue;
     }
   }
 
