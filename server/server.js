@@ -1,4 +1,6 @@
 var express = require('express');
+app = express();
+
 var gridParser = require(__dirname + '/lib/ASCII-Grid-Parser.js');
 
 // Parse all APET data
@@ -23,7 +25,7 @@ function readAPETData() {
   console.log('Parsing APET ASCII Grids Done');
 }
 readAPETData();
-console.log(APET);
+// console.log(APET);
 
 // var parsedValue = gridParser(__dirname + '/data/testASCIIgrid.txt');
 // console.log(parsedValue);
@@ -40,6 +42,8 @@ function getAPET(longitude, latitude) {
   console.log('Request Value', requestLocationString);
 
   var APETResult = {};
+  APETResult.longitude = parseFloat(roundedLongitude.toFixed(1));
+  APETResult.latitude = parseFloat(roundedLatitude.toFixed(2));
   APETResult.annual = APET.annual.data[requestLocationString];
   APETResult.january = APET.january.data[requestLocationString];
   APETResult.february = APET.february.data[requestLocationString];
@@ -54,8 +58,29 @@ function getAPET(longitude, latitude) {
   APETResult.november = APET.november.data[requestLocationString];
   APETResult.december = APET.december.data[requestLocationString];
 
-  console.log(APETResult);
+  // console.log(APETResult);
+  if (APETResult.annual === undefined) {
+    APETResult = undefined;
+  }
   return APETResult;
 }
 
-getAPET(112.16, -43.78);
+app.get('/APET/:longitude,:latitude', function(request, response) {
+  console.log('APET Reached');
+  console.log('Requested Longitude: ', request.params.longitude);
+  console.log('Requested Latitude: ', request.params.latitude);
+
+  var result = getAPET(request.params.longitude, request.params.latitude);
+  if (result !== undefined) {
+    response.json(result);
+  } else {
+    response.statusCode = 404;
+    response.end();
+  }
+
+});
+
+app.listen(8000, function() {
+  console.log('Listening at port 8000');
+});
+
