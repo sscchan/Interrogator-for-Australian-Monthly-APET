@@ -1,4 +1,4 @@
-# Project Name #
+# Interrogator for Australian Monthly Areal Potential Evapotranspiration (I-AM-A-PET) #
 
 <!-- 
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
@@ -15,30 +15,30 @@ Oh, and I also like to write press-releases in what I call "Oprah-speak" for mai
 
 Once the project moves into development, the press release can be used as a touchstone; a guiding light. The product team can ask themselves, "Are we building what is in the press release?" If they find they're spending time building things that aren't in the press release (overbuilding), they need to ask themselves why. This keeps product development focused on achieving the customer benefits and not building extraneous stuff that takes longer to build, takes resources to maintain, and doesn't provide real customer benefit (at least not enough to warrant inclusion in the press release).
  -->
- 
-## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
 
-## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+
+## Target Market ##
+  This tool is aimed to help stormwater engineers who uses MUSIC stormwater quality modelling tool to quickly and effectively retrieve Bureau of Meteorlogy's (BOM) Areal Potential Evapotranspiration (APET) data.
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  This tool enables an engineer to select their project location on a map and retrieve the BOM APET data for input for thier MUSIC model.
 
 ## Problem ##
-  > Describe the problem your product solves.
+  Stromwater engineers in Australia, as part of their MUSIC modelling process, require APET data for their project location as inputs. Common practice is to read off APET value contours (and interpolate values) for each month off the maps in the BOM website. This is slow and often error-prone.
+
+  The "proper" way to obtain the data is off the APET ERSI Grid from the BOM, but the often the engineer does not have sufficient GIS knowledge to do so. This means that the task is delegated to the company's GIS operator, which introduce additional issues (availability, time, cost).
 
 ## Solution ##
   > Describe how your product elegantly solves the problem.
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+  "I used to cringe looking at a senior engineer eye-balling the BOM APET charts. But with this easy-to-use tool, they can get accurate data first time, everytime."
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  Go onto the website, click on the map where you want the APET data, and the result data is dispaly on the right. Enter this into your MUSIC model.
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  "I used to have to budget 2 hours for a GIS guy (because he pads his timesheet) to get my APET input data for MUSIC modelling, now I can do it in 5 mintues."
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+  Goto http://www.IAMAPET.com to use the tool!
