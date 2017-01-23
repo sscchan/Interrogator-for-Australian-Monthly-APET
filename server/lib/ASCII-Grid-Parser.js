@@ -12,7 +12,6 @@ function parseASCIIGrid(filepath) {
 
   // Split file into lines
   var fileLines = fileContent.split('\n');
-  // console.log(fileLines);
 
   // Parse first 6 lines, which is the ASCII gird reference data
   for (let i = 0; i < 6; i++) {
@@ -24,11 +23,47 @@ function parseASCIIGrid(filepath) {
     gridReference[key] = value;
   }
 
+  gridReference['ncols'] = parseInt(gridReference['ncols'], 10);
+  gridReference['nrows'] = parseInt(gridReference['nrows'], 10);
+  gridReference['xllcorner'] = parseFloat(gridReference['xllcorner']);
+  gridReference['yllcorner'] = parseFloat(gridReference['yllcorner']);
+  gridReference['cellsize'] = parseFloat(gridReference['cellsize']);
+  gridReference['NODATA_value'] = parseFloat(gridReference['NODATA_value']);  
+
+
   // Parse the rest of the data, and put them into gridData with key as the coorindate
+  for (let i = 6; i < fileLines.length; i++) {
+    var row = fileLines[i];
+    let ncols = gridReference['ncols'];
+    let nrows = gridReference['nrows'];
+    let xllcorner = gridReference['xllcorner'];
+    let yllcorner = gridReference['yllcorner'];
+    let cellsize = gridReference['cellsize'];
 
+    let rowIndex = i - 6;
+    let yCoordinate = yllcorner + ((nrows - rowIndex) * cellsize) - (0.5 * cellsize);
 
-  console.log(JSON.stringify(gridReference));
-  return fileContent;
+    // Split the lines into columns, denoting each value
+    var col = row.split(' ');
+    // console.log(col);
+    for (let j = 0; j < col.length; j++) {
+      let cellValue = parseFloat(col[j]);
+
+      // Do not enter any NO_DATA value into our data storage
+      if (cellValue === gridReference['NODATA_value']) {
+        continue;
+      }
+
+      let colIndex = j;
+
+      let xCoordinate = xllcorner + (colIndex * cellsize) + (0.5 * cellsize);
+
+      // Save it into our storage
+      gridData[xCoordinate + ',' + yCoordinate] = cellValue;
+    }
+  }
+
+  return {reference: gridReference, data: gridData};
 }
 
 module.exports = parseASCIIGrid;
