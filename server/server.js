@@ -1,6 +1,9 @@
 var express = require('express');
 app = express();
 
+// var cors = require('cors');
+// app.use(cors());
+
 var gridParser = require(__dirname + '/lib/ASCII-Grid-Parser.js');
 
 // Parse all APET data
@@ -66,7 +69,7 @@ function getAPET(longitude, latitude) {
 }
 
 app.get('/APET/:longitude,:latitude', function(request, response) {
-  console.log('APET Reached');
+  // console.log('APET Reached');
   console.log('Requested Longitude: ', request.params.longitude);
   console.log('Requested Latitude: ', request.params.latitude);
 
@@ -82,7 +85,6 @@ app.get('/APET/:longitude,:latitude', function(request, response) {
 
 // Serve static pages for client using express middleware
 let clientFileDirectory = __dirname + '/../client';
-console.log(clientFileDirectory);
 app.use(express.static(clientFileDirectory));
 
 // Start listening
