@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html >
+
+<head>
+  <meta charset="UTF-8">
+  <title>I-AM-APE - Interrogator for Australian Monthly Areal Potential Evapotranspiration</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.js"></script>
+  <script src="src/clientAngular.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDa2vVvI5rQPPiRnlpaNkoD0thBVRI_-lM&libraries=places">//&callback=initMap"></script>  
+  <style>
+    html {
+      min-height: 100%;
+    }
+
+    body {
+    /*   min-height: 100vh; */
+      padding: 5px;
+    }
+
+    #map {
+      width: 100%;
+      min-height: 400px;
+      height: calc(100vh - 160px);
+      background-color: grey;
+    }
+
+    #pac-input {
+      background-color: #fff;
+      font-size: 15px;
+      font-weight: 300;
+      margin-left: 12px;
+      padding: 0 11px 0 13px;
+      text-overflow: ellipsis;
+      width: 400px;
+    }
+
+    td {
+      padding: 2px 2px 2px 2px;
+    }
+  </style>
+  
+</head>
+
+<body translate="no" >
+
+  <body ng-app="app">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8 col-md-auto" style="background-color: 'light green';">
+        <h2>Interrogator for Australian Monthly Areal Potential Evapotranspiration (I-AM-APE)</h2>
+        <br>
+        <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+        <div id="map" ng-controller="mapController" ng-click="dummyToTriggerBinding()"></div>
+      </div>
+      <div class="col-md-4">
+        <div>
+           <div class="container-fluid">
+              <div class="row" ng-controller="manualLatLongInputController">
+                <br>
+                <form name="APETQuery">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="longitudeInput">Longitude</label>
+                    <input type="text" class="form-control" id="longitudeInput" ng-model="targetLatLng.longitude">
+                     <button id="querySubmit" type="submit" class="btn btn-default" ng-controller="inquireButtonController" ng-click="getAPETData()">Inquire</button>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="latitudeInput">Latitude</label>
+                    <input type="text" class="form-control" id="latitudeInput" ng-model="targetLatLng.latitude" ng-click="inquireAPET()">
+                    <button id="copyResults" type="submit" class="btn btn-default">Copy Results</button>                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        
+        <div>
+           <table class="table table-condensed table-striped" ng-controller="resultsTableController">
+             <thead>
+               <tr>
+                 <th>Month</th>
+                 <th>APET (mm)</th>
+               </tr>
+             </thead>
+             <tbody id="resultTableBody">
+               <tr>
+                 <td>Annual</td><td>{{result.annual}}</td>
+               </tr>
+               <tr>
+                 <td>January</td><td>{{result.january}}</td>
+               </tr>
+               <tr>
+                 <td>February</td><td>{{result.february}}</td>
+               </tr>
+               <tr>
+                 <td>March</td><td>{{result.march}}</td>
+               </tr>
+               <tr>
+                 <td>April</td><td>{{result.april}}</td>
+               </tr>
+               <tr>
+                 <td>May</td><td>{{result.may}}</td>
+               </tr>
+               <tr>
+                 <td>June</td><td>{{result.june}}</td>
+               </tr>
+               <tr>
+                 <td>July</td><td>{{result.july}}</td>
+               </tr>
+               <tr>
+                 <td>August</td><td>{{result.august}}</td>
+               </tr>
+               <tr>
+                 <td>September</td><td>{{result.september}}</td>
+               </tr>
+               <tr>
+                 <td>October</td><td>{{result.october}}</td>
+               </tr>    
+               <tr>
+                 <td>November</td><td>{{result.november}}</td>
+               </tr>
+               <tr>
+                 <td>December</td><td>{{result.december}}</td>
+               </tr>               
+          </table>
+        </div>
+        <div class="form-group">
+          <br>
+          MUSIC Input Text File:
+          <textarea id="resultTextArea" style="width:100%" rows="1" ng-controller="resultTextInputController">{{APET.january}},{{APET.february}},{{APET.march}},{{APET.april}},{{APET.may}},{{APET.june}},{{APET.july}},{{APET.august}},{{APET.september}},{{APET.october}},{{APET.november}},{{APET.december}}</textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+  
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
+
+    <script>
+    var serverLocation = '/';
+    $('#copyResults').on('click', function(event) {
+      event.preventDefault();
+      
+      var currentFocus = document.activeElement;
+      var resultTextArea = document.getElementById('resultTextArea');
+      resultTextArea.focus();
+      resultTextArea.setSelectionRange(0, resultTextArea.value.length);
+
+      // copy the selection
+      var succeed;
+      try {
+          succeed = document.execCommand("copy");
+          currentFocus.focus();
+      } catch(e) {
+          succeed = false;
+          currentFocus.focus();
+      }
+    });
+
+    document.execCommand('copy');
+  </script>
+
+</body>
+</html>
+ 
