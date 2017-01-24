@@ -60,7 +60,20 @@ app.factory('APETResultFactory', ['$http', 'targetLatLngFactory', function($http
         }.bind(this),
         function onError(response) {
           console.log('Error: ', response);
-        }
+          this.annual = 'NA';
+          this.january = 'NA';
+          this.february = 'NA';
+          this.march = 'NA';
+          this.april = 'NA';
+          this.may = 'NA';
+          this.june = 'NA';
+          this.july = 'NA';
+          this.august = 'NA';
+          this.september = 'NA';
+          this.october = 'NA';
+          this.november = 'NA';
+          this.december = 'NA';
+        }.bind(this)
       );
     }
   };
