@@ -88,7 +88,9 @@ let clientFileDirectory = __dirname + '/../client';
 app.use(express.static(clientFileDirectory));
 
 // Start listening
-app.listen(8000, function() {
-  console.log('Listening at port 8000');
+var targetPort = process.env.PORT || 8000;
+
+app.listen(targetPort, function() {
+  console.log('Listening at port:', targetPort);
 });
 
