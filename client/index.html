@@ -1,0 +1,298 @@
+
+<!DOCTYPE html>
+<html >
+
+<head>
+  <meta charset="UTF-8">
+  <title>I-AM-APE - Interrogator for Australian Monthly Areal Potential Evapotranspiration</title>
+  
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+
+      <style>
+      html {
+  min-height: 100%;
+}
+
+body {
+/*   min-height: 100vh; */
+  padding: 5px;
+}
+
+#map {
+  width: 100%;
+  min-height: 400px;
+  height: calc(100vh - 160px);
+  background-color: grey;
+}
+
+#pac-input {
+  background-color: #fff;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 400px;
+}
+
+td {
+  padding: 2px 2px 2px 2px;
+}
+    </style>
+
+  
+  
+  
+  
+</head>
+
+<body translate="no" >
+
+  <body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8 col-md-auto" style="background-color: 'light green';">
+        <h2>Interrogator for Australian Monthly Areal Potential Evapotranspiration (I-AM-APE)</h2>
+        <br>
+        <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+        <div id="map"></div>
+      </div>
+      <div class="col-md-4">
+        <div>
+           <div class="container-fluid">
+              <div class="row">
+                <br>
+                <form name="APETQuery">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="longitudeInput">Longitude</label>
+                    <input type="text" class="form-control" id="longitudeInput">
+                     <button id="querySubmit" type="submit" class="btn btn-default">Inquire</button>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="latitudeInput">Latitude</label>
+                    <input type="text" class="form-control" id="latitudeInput">
+                    <button id="copyResults" type="submit" class="btn btn-default">Copy Results</button>                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        
+        <div>
+           <table class="table table-condensed table-striped">
+             <thead>
+               <tr>
+                 <th>Month</th>
+                 <th>APET (mm)</th>
+               </tr>
+             </thead>
+             <tbody id="resultTableBody">
+               <tr>
+                 <td>Annual</td><td></td>
+               </tr>
+               <tr>
+                 <td>January</td><td></td>
+               </tr>
+               <tr>
+                 <td>February</td><td></td>
+               </tr>
+               <tr>
+                 <td>March</td><td></td>
+               </tr>
+               <tr>
+                 <td>April</td><td></td>
+               </tr>
+               <tr>
+                 <td>May</td><td></td>
+               </tr>
+               <tr>
+                 <td>June</td><td></td>
+               </tr>
+               <tr>
+                 <td>July</td><td></td>
+               </tr>
+               <tr>
+                 <td>August</td><td></td>
+               </tr>
+               <tr>
+                 <td>September</td><td></td>
+               </tr>
+               <tr>
+                 <td>October</td><td></td>
+               </tr>    
+               <tr>
+                 <td>November</td><td></td>
+               </tr>
+               <tr>
+                 <td>December</td><td></td>
+               </tr>               
+          </table>
+        </div>
+        <div class="form-group">
+          <br>
+          MUSIC Input Text File:
+          <textarea id="resultTextArea" style="width:100%" rows="1"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    function initMap() {
+      var uluru = {lat: -25.363, lng: 131.044};
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 4,
+        center: uluru
+      });
+      
+      var input = document.getElementById('pac-input');
+      var defaultBounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(-43.41, 111.97),
+        new google.maps.LatLng(-9.89, 153.12));
+      
+      var searchBox = new google.maps.places.SearchBox(input, {bounds: defaultBounds});
+      map.controls[google.maps.ControlPosition.TOP].push(input);
+      
+      searchBox.addListener('places_changed', function() {
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+          return;
+        }
+        
+        var searchedLatitude = places[0].geometry.location.lat();
+        var searchedLongitude = places[0].geometry.location.lng();
+        
+        map.panTo({lat: searchedLatitude, lng: searchedLongitude});
+        map.setZoom(14);
+        
+        // See the Lat & Long field values
+        marker.setPosition({'lat': searchedLatitude, 'lng': searchedLongitude});        
+        $('#longitudeInput').val(searchedLongitude);
+        $('#latitudeInput').val(searchedLatitude);
+        
+        // Send AJAX request
+        $("#querySubmit").click();
+        
+        // console.log(places);
+      });
+
+      var marker = new google.maps.Marker({
+        //position: uluru,
+        map: map
+      });
+
+      
+      // Add Hook for user clicking on the map
+      map.addListener('click', function(event) {
+        var clickedLat = event.latLng.lat();
+        var clickedLng = event.latLng.lng();
+        
+        marker.setPosition({'lat': clickedLat, 'lng': clickedLng});
+        
+        // See the Lat & Long field values
+        $('#longitudeInput').val(clickedLng);
+        $('#latitudeInput').val(clickedLat);
+        
+        // Send AJAX request
+        $("#querySubmit").click();
+      });
+    }
+  </script>
+
+  <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDa2vVvI5rQPPiRnlpaNkoD0thBVRI_-lM&libraries=places&callback=initMap">
+  </script>
+</body>
+  
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
+
+    <script>
+    var serverLocation = '/';
+    $('#copyResults').on('click', function(event) {
+      event.preventDefault();
+      
+      var currentFocus = document.activeElement;
+      var resultTextArea = document.getElementById('resultTextArea');
+      resultTextArea.focus();
+      resultTextArea.setSelectionRange(0, resultTextArea.value.length);
+
+      // copy the selection
+      var succeed;
+      try {
+          succeed = document.execCommand("copy");
+          currentFocus.focus();
+      } catch(e) {
+          succeed = false;
+          currentFocus.focus();
+      }
+      
+      
+    });
+
+    document.execCommand('copy');
+    $("#querySubmit").on('click', function(event) {
+      event.preventDefault();
+      // console.log('Submit Clicked');
+      
+      // Clear result box
+      $('#resultTextArea').val('');
+      
+      // Retrieve user input from form
+      var longitude = $('#longitudeInput').val();
+      var latitude = $('#latitudeInput').val();
+      $.get(serverLocation + 'APET/' + longitude + ',' + latitude)
+        .done(function(data) {
+          var resultText = 
+              data.january + ',' +
+              data.february + ',' +
+              data.march + ',' +
+              data.april + ',' +   
+              data.may + ',' +
+              data.june + ',' +
+              data.july + ',' +
+              data.august + ',' +  
+              data.september + ',' +
+              data.october + ',' +
+              data.november + ',' +
+              data.december;
+          $('#resultTextArea').val(resultText);
+          
+          // Populate result tables
+          var tableRows = $('#resultTableBody').children();
+          tableRows[0].children[1].innerHTML = data.annual;
+          tableRows[1].children[1].innerHTML = data.january;
+          tableRows[2].children[1].innerHTML = data.february;
+          tableRows[3].children[1].innerHTML = data.march;
+          tableRows[4].children[1].innerHTML = data.april;
+          tableRows[5].children[1].innerHTML = data.may;
+          tableRows[6].children[1].innerHTML = data.june;
+          tableRows[7].children[1].innerHTML = data.july;
+          tableRows[8].children[1].innerHTML = data.august;
+          tableRows[9].children[1].innerHTML = data.september;
+          tableRows[10].children[1].innerHTML = data.october;
+          tableRows[11].children[1].innerHTML = data.november;
+          tableRows[12].children[1].innerHTML = data.december;    
+        // $('#resultTableBody')
+        })
+        .fail(function(error) {
+          console.log('failed');
+          console.log('Error: ', error);
+          $('#resultTextArea').val('Error');
+          var tableRows = $('#resultTableBody').children();
+          for (var i = 0; i < tableRows.length; i++) {
+            tableRows[i].children[1].innerHTML = '';
+          }
+          
+        });
+    });
+  </script>
+
+</body>
+</html>
+ 
