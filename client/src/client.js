@@ -10,7 +10,7 @@
     // copy the selection
     var succeed;
     try {
-      succeed = document.execCommand("copy");
+      succeed = document.execCommand('copy');
       currentFocus.focus();
     } catch (e) {
       succeed = false;
@@ -21,9 +21,8 @@
   });
 
   document.execCommand('copy');
-  $("#querySubmit").on('click', function(event) {
+  $('#querySubmit').on('click', function(event) {
     event.preventDefault();
-    // console.log('Submit Clicked');
     
     // Clear result box
     $('#resultTextArea').val('');

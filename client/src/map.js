@@ -28,17 +28,15 @@
         
         // See the Lat & Long field values
         marker.setPosition({'lat': searchedLatitude, 'lng': searchedLongitude});        
-        $('#longitudeInput').val(searchedLongitude);
-        $('#latitudeInput').val(searchedLatitude);
+        $('#longitudeInput').val(searchedLongitude.toFixed(6));
+        $('#latitudeInput').val(searchedLatitude.toFixed(6));
         
         // Send AJAX request
-        $("#querySubmit").click();
+        $('#querySubmit').click();
         
-        // console.log(places);
       });
 
       var marker = new google.maps.Marker({
-        //position: uluru,
         map: map
       });
 
@@ -55,6 +53,6 @@
         $('#latitudeInput').val(clickedLat);
         
         // Send AJAX request
-        $("#querySubmit").click();
+        $('#querySubmit').click();
       });
     }
