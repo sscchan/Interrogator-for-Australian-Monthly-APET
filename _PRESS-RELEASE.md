@@ -1,4 +1,4 @@
-# Interrogator for Australian Monthly Areal Potential Evapotranspiration (I-AM-A-PET) #
+# Interrogator for Australian Monthly Areal Potential Evapotranspiration#
 
 <!-- 
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
@@ -29,7 +29,7 @@ Once the project moves into development, the press release can be used as a touc
   The "proper" way to obtain the data is off the APET ERSI Grid from the BOM, but the often the engineer does not have sufficient GIS knowledge to do so. This means that the task is delegated to the company's GIS operator, which introduce additional issues such as availability, time and cost.
 
 ## Solution ##
-  I-AM-A-PET solves this issue by allowing an engineer to quickly and easily interrogate APET data on a map, bypassing the issues with eye-balling BOM charts or asking the GIS operator to do the work.
+  This application solves this issue by allowing an engineer to quickly and easily interrogate APET data on a map, bypassing the issues with eye-balling BOM charts or asking the GIS operator to do the work.
 
 ## Quote ##
   "I used to cringe looking at a senior engineer eye-balling the BOM APET charts. But with this easy-to-use tool, they can get accurate data first time, everytime." -- ME
@@ -38,7 +38,7 @@ Once the project moves into development, the press release can be used as a touc
   Go onto the website, click on the map where you want the APET data, and the result data is dispaly on the right. Enter this into your MUSIC model.
 
 ## Customer Quote ##
-  "I used to have to budget 2 hours for a GIS guy (because he pads his timesheet) to get my APET input data for MUSIC modelling, now I can do it in 5 mintues and I don't have to fight other project managers for the GIS guy's availability." - Abraham Lincoln
+  "I used to have to budget 2 hours for a GIS guy (because he pads his timesheet) to get my APET input data for MUSIC modelling, now I can do it in 5 mintues and I don't have to fight other project managers for the GIS guy's availability." - Adam
 
 ## Closing and Call to Action ##
-  Goto http://www.IAMAPET.com to use the tool!
+  Goto https://enigmatic-wave-70998.herokuapp.com/ to use the tool!
