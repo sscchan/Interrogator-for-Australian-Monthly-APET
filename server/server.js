@@ -1,6 +1,7 @@
 var express = require('express');
 app = express();
 
+// Optional CORS support if deploying server only with static page served elsewhere
 // var cors = require('cors');
 // app.use(cors());
 
@@ -28,18 +29,12 @@ function readAPETData() {
   console.log('Parsing APET ASCII Grids Done');
 }
 readAPETData();
-// console.log(APET);
-
-// var parsedValue = gridParser(__dirname + '/data/testASCIIgrid.txt');
-// console.log(parsedValue);
 
 function getAPET(longitude, latitude) {
   // Round longitude to nearest 0.1 and latitude to nearest 0.x5
   var roundedLongitude = Math.round(longitude / 0.1) * 0.1;
   var roundedLatitude = Math.round(((latitude - 0.05) / 0.1)) * 0.1 + 0.05;
   
-  // console.log('Rounded Longitude', roundedLongitude.toFixed(1));
-  // console.log('Rounded Latitude', roundedLatitude.toFixed(2));
   var requestLocationString = roundedLongitude.toFixed(1) + ',' + roundedLatitude.toFixed(2);
 
   console.log('Request Value', requestLocationString);
@@ -61,7 +56,6 @@ function getAPET(longitude, latitude) {
   APETResult.november = APET.november.data[requestLocationString];
   APETResult.december = APET.december.data[requestLocationString];
 
-  // console.log(APETResult);
   if (APETResult.annual === undefined) {
     APETResult = undefined;
   }
@@ -86,7 +80,6 @@ app.get('/APET/:longitude,:latitude', function(request, response) {
 // Serve static pages for client using express middleware
 let clientFileDirectory = __dirname + '/../client';
 app.use(express.static(clientFileDirectory));
-
 // Start listening
 var targetPort = process.env.PORT || 8000;
 
