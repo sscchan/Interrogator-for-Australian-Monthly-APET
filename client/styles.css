@@ -1,0 +1,33 @@
+html {
+  min-height: 100%;
+}
+
+body {
+/*   min-height: 100vh; */
+  padding: 5px;
+}
+
+#map {
+  width: 100%;
+  min-height: 400px;
+  height: calc(100vh - 160px);
+  background-color: grey;
+}
+
+#pac-input {
+  background-color: #fff;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 400px;
+}
+
+#resultTextArea {
+  width: 100%;
+}
+
+td {
+  padding: 2px 2px 2px 2px;
+}
